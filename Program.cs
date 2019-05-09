@@ -78,20 +78,20 @@ namespace BinaryTreeExample
 
             var bt = Util.Singleton(new BTElement() { key = 42, value = "cats" });
 
-            Console.WriteLine("42, ");
+            Console.Write("42, ");
 
             for (int i = 0; i < 10; i++)
             {
                 var nKey = r.Next(100);
                 bt.Add(new BTElement() { key = nKey, value = "" });
 
-                Console.WriteLine($"{nKey}, ");
+                Console.Write($"{nKey}, ");
             }
             Console.WriteLine();
 
             foreach (var e in bt.Flatten())
             {
-                Console.WriteLine($"{e.key}, ");
+                Console.Write($"{e.key}, ");
             }
             Console.WriteLine();
         }
