@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace BinaryTreeExample
 {
-    struct BTElement
+    struct BTElement<V>
     {
         public int key;
-        public string value;
+        public V value;
     }
 
-    class BinaryTree
+    class BinaryTree<V>
     {
-        public BTElement value;
+        public BTElement<V> value;
 
-        public BinaryTree left = null;
-        public BinaryTree right = null;
+        public BinaryTree<V> left = null;
+        public BinaryTree<V> right = null;
 
-        public void Add(BTElement e)
+        public void Add(BTElement<V> e)
         {
             if (e.key < value.key)
             {
@@ -44,9 +44,9 @@ namespace BinaryTreeExample
                 }
             }
         }
-        public List<BTElement> Flatten()
+        public List<BTElement<V>> Flatten()
         {
-            var l = new List<BTElement>();
+            var l = new List<BTElement<V>>();
 
             if (left != null)
             {
@@ -65,9 +65,9 @@ namespace BinaryTreeExample
 
     static class Util
     {
-        public static BinaryTree Singleton(BTElement e)
+        public static BinaryTree<V> Singleton<V>(BTElement<V> e)
         {
-            return new BinaryTree() { value = e };
+            return new BinaryTree<V>() { value = e };
         }
     }
     class Program
@@ -76,14 +76,14 @@ namespace BinaryTreeExample
         {
             Random r = new Random();
 
-            var bt = Util.Singleton(new BTElement() { key = 42, value = "cats" });
+            var bt = Util.Singleton(new BTElement<string>() { key = 42, value = "cats" });
 
             Console.Write("42, ");
 
             for (int i = 0; i < 10; i++)
             {
                 var nKey = r.Next(100);
-                bt.Add(new BTElement() { key = nKey, value = "" });
+                bt.Add(new BTElement<string>() { key = nKey, value = "" });
 
                 Console.Write($"{nKey}, ");
             }
