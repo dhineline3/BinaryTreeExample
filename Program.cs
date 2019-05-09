@@ -6,22 +6,25 @@ using System.Threading.Tasks;
 
 namespace BinaryTreeExample
 {
-    struct BTElement<V>
+    struct BTElement<K, V>
+        where K : IComparable<K>
     {
-        public int key;
+
+        public K key;
         public V value;
     }
 
-    class BinaryTree<V>
+    class BinaryTree<K, V>
+        where K : IComparable<K>
     {
-        public BTElement<V> value;
+        public BTElement<K, V> value;
 
-        public BinaryTree<V> left = null;
-        public BinaryTree<V> right = null;
+        public BinaryTree<K, V> left = null;
+        public BinaryTree<K, V> right = null;
 
-        public void Add(BTElement<V> e)
+        public void Add(BTElement<K, V> e)
         {
-            if (e.key < value.key)
+            if (e.key.CompareTo(value.key) < 0)
             {
                 if (left == null)
                 {
@@ -44,9 +47,9 @@ namespace BinaryTreeExample
                 }
             }
         }
-        public List<BTElement<V>> Flatten()
+        public List<BTElement<K, V>> Flatten()
         {
-            var l = new List<BTElement<V>>();
+            var l = new List<BTElement<K, V>>();
 
             if (left != null)
             {
@@ -65,9 +68,10 @@ namespace BinaryTreeExample
 
     static class Util
     {
-        public static BinaryTree<V> Singleton<V>(BTElement<V> e)
+        public static BinaryTree<K, V> Singleton<K, V>(BTElement<K, V> e)
+            where K : IComparable<K>
         {
-            return new BinaryTree<V>() { value = e };
+            return new BinaryTree<K, V>() { value = e };
         }
     }
     class Program
@@ -76,14 +80,14 @@ namespace BinaryTreeExample
         {
             Random r = new Random();
 
-            var bt = Util.Singleton(new BTElement<string>() { key = 42, value = "cats" });
+            var bt = Util.Singleton(new BTElement<int, string>() { key = 42, value = "cats" });
 
             Console.Write("42, ");
 
             for (int i = 0; i < 10; i++)
             {
                 var nKey = r.Next(100);
-                bt.Add(new BTElement<string>() { key = nKey, value = "" });
+                bt.Add(new BTElement<int, string>() { key = nKey, value = "" });
 
                 Console.Write($"{nKey}, ");
             }
